@@ -79,13 +79,6 @@ func Unwrap(err error) error {
 	return errors.Unwrap(err)
 }
 
-func ArrayDimsArgree[N any, P any](l []N, r []P) error {
-	if ll, lr := len(l), len(r); ll != lr {
-		return Wrap(DimensionsDoNotAgree, "len(one)=%d len(two)=%d", ll, lr)
-	}
-	return nil
-}
-
 // Given a list of errors it will append them with a predetermined format, as
 // shown below.
 //
