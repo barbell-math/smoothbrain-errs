@@ -1,6 +1,6 @@
 // A very simple library that helps with formatting error messages. It
 // provides a way to have consistent, descriptive errors.
-package customerr
+package sberr
 
 import (
 	"errors"
