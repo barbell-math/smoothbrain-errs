@@ -9,6 +9,40 @@ on:
   pull_request:
 
 jobs:
+  checkDepsAreUpToDate:
+    name: Test on Go v${{ matrix.go_version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        go_version: ['1.24']
+        os: [ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go v${{ matrix.go_version }}
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ matrix.go_version }}
+
+    - name: Run Update Cmds
+      run: |
+        go get -u ./...
+        go mod tidy
+      shell: bash
+
+    - name: Check That Eveything is Up to Date
+      run: |
+        if [[ -z "$(git diff)" ]]; then
+          echo "No changes detected"
+        else
+          echo "Changes detected!"
+          echo "Out of date changes packages detected!"
+          echo "Run 'go get -u ./...' followed by 'go mod tidy' to update all packages."
+          exit 1
+        fi
+      shell: bash
+
   checkFmt:
     name: Test on Go v${{ matrix.go_version }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
