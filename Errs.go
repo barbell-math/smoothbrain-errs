@@ -49,7 +49,7 @@ func InverseWrap(origErr error, fmtStr string, vals ...any) error {
 func WrapValueList(
 	origErr error,
 	description string,
-	valsList []WrapListVal,
+	valsList ...WrapListVal,
 ) error {
 	var sb strings.Builder
 	sb.WriteString(fmt.Sprintf("%%w\n  |- Description: %s", description))

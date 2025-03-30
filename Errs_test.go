@@ -26,9 +26,11 @@ func TestWrap(t *testing.T) {
 }
 
 func TestWrapValueList(t *testing.T) {
-	e := WrapValueList(testErrOne, "Val outside range", []WrapListVal{
-		{ItemName: "value", Item: 10},
-	})
+	e := WrapValueList(
+		testErrOne,
+		"Val outside range",
+		WrapListVal{ItemName: "value", Item: 10},
+	)
 	smoothbraintest.Eq(
 		t,
 		fmt.Sprintf(
