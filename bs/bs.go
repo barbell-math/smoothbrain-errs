@@ -36,12 +36,26 @@ func main() {
 		sbbs.Stage(
 			"Go Cmds",
 			func(ctxt context.Context, cmdLineArgs ...string) error {
+				if err := sbbs.RunStdout(
+					ctxt, "go",
+					"get", "github.com/barbell-math/smoothbrain-bs@latest",
+				); err != nil {
+					return err
+				}
+				if err := sbbs.RunStdout(
+					ctxt, "go",
+					"get", "github.com/barbell-math/smoothbrain-test@latest",
+				); err != nil {
+					return err
+				}
+
 				if err := sbbs.RunStdout(ctxt, "go", "get", "-u", "./..."); err != nil {
 					return err
 				}
 				if err := sbbs.RunStdout(ctxt, "go", "mod", "tidy"); err != nil {
 					return err
 				}
+
 				return nil
 			},
 		),
