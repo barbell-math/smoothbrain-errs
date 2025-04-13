@@ -8,6 +8,6 @@ require (
 )
 
 replace (
-	github.com/barbell-math/smoothbrain-bs => ../smoothbrain-bs
-// github.com/barbell-math/smoothbrain-test => ../smoothbrain-test
+//	github.com/barbell-math/smoothbrain-bs => ../smoothbrain-bs
+//	github.com/barbell-math/smoothbrain-test => ../smoothbrain-test
 )
