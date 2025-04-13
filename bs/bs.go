@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"strings"
 
 	sbbs "github.com/barbell-math/smoothbrain-bs"
 )
@@ -34,21 +35,35 @@ func main() {
 		context.Background(),
 		"updateDeps",
 		sbbs.Stage(
-			"Go Cmds",
+			"barbell math package cmds",
 			func(ctxt context.Context, cmdLineArgs ...string) error {
-				if err := sbbs.RunStdout(
-					ctxt, "go",
-					"get", "github.com/barbell-math/smoothbrain-bs@latest",
-				); err != nil {
-					return err
-				}
-				if err := sbbs.RunStdout(
-					ctxt, "go",
-					"get", "github.com/barbell-math/smoothbrain-test@latest",
+				var packages bytes.Buffer
+				if err := sbbs.Run(
+					ctxt, &packages, "go", "list", "-m", "-u", "all",
 				); err != nil {
 					return err
 				}
 
+				lines := strings.Split(packages.String(), "\n")
+				// First line is the current package, skip it
+				for i := 1; i < len(lines); i++ {
+					iterPackage := strings.SplitN(lines[i], " ", 2)
+					if !strings.Contains(iterPackage[0], "barbell-math") {
+						continue
+					}
+
+					if err := sbbs.RunStdout(
+						ctxt, "go", "get", iterPackage[0]+"@latest",
+					); err != nil {
+						return err
+					}
+				}
+				return nil
+			},
+		),
+		sbbs.Stage(
+			"Non barbell math package cmds",
+			func(ctxt context.Context, cmdLineArgs ...string) error {
 				if err := sbbs.RunStdout(ctxt, "go", "get", "-u", "./..."); err != nil {
 					return err
 				}
