@@ -83,10 +83,10 @@ func Unwrap(err error) error {
 // shown below.
 //
 //	<original first error>
-//	  |- <wrapped information>
+//	  → <wrapped information>
 //	...
 //	<original nth error>
-//	  |- <wrapped information>
+//	  → <wrapped information>
 //
 // This allows for consistent error formatting. Special cases are as follows:
 //   - All supplied errors are nil: The returned value will be nil.
