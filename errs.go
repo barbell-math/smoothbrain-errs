@@ -18,11 +18,11 @@ type (
 // Wraps an error with a predetermined format, as shown below.
 //
 //	<original error>
-//	  |- <wrapped information>
+//	  → <wrapped information>
 //
 // This allows for consistent error formatting.
 func Wrap(origErr error, fmtStr string, vals ...any) error {
-	fmtStrWithErr := fmt.Sprintf("%%w\n  |- %s", fmtStr)
+	fmtStrWithErr := fmt.Sprintf("%%w\n\t→ %s", fmtStr)
 	args := []interface{}{origErr}
 	return fmt.Errorf(fmtStrWithErr, append(args, vals...)...)
 }
@@ -30,20 +30,20 @@ func Wrap(origErr error, fmtStr string, vals ...any) error {
 // Wraps an error with a predetermined format, as shown below.
 //
 //	<wrapped information>
-//	  |- <original error>
+//	  → <original error>
 //
 // This allows for consistent error formatting.
 func InverseWrap(origErr error, fmtStr string, vals ...any) error {
-	fmtStrWithErr := fmt.Sprintf("%s\n  |- %%w", fmtStr)
+	fmtStrWithErr := fmt.Sprintf("%s\n\t→ %%w", fmtStr)
 	return fmt.Errorf(fmtStrWithErr, append(vals, origErr)...)
 }
 
 // Wraps an error with a predetermined format, as shown below,
 //
 //	<original error>
-//	  |- <description>
-//	  |- value1 name (value1 type): value1
-//	  |- value2 name (value2 type): value2
+//	  → <description>
+//	  → value1 name (value1 type) = value1
+//	  → value2 name (value2 type) = value2
 //
 // This allows for consistent error formatting.
 func WrapValueList(
@@ -52,18 +52,18 @@ func WrapValueList(
 	valsList ...WrapListVal,
 ) error {
 	var sb strings.Builder
-	sb.WriteString(fmt.Sprintf("%%w\n  |- Description: %s", description))
+	sb.WriteString(fmt.Sprintf("%%w\n\t→ Description: %s", description))
 	if len(valsList) > 0 {
 		sb.WriteByte('\n')
 	}
 	for i, v := range valsList {
 		if stringer, ok := v.Item.(fmt.Stringer); ok {
 			sb.WriteString(fmt.Sprintf(
-				"  |- %s (%T): %s", v.ItemName, v.Item, stringer,
+				"\t→ %s (%T) = %s", v.ItemName, v.Item, stringer,
 			))
 		} else {
 			sb.WriteString(fmt.Sprintf(
-				"  |- %s (%T): %+v", v.ItemName, v.Item, v.Item,
+				"\t→ %s (%T) = %+v", v.ItemName, v.Item, v.Item,
 			))
 		}
 		if i+1 < len(valsList) {

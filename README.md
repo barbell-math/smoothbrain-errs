@@ -21,7 +21,7 @@ A very simple library that helps with formatting error messages. It provides a w
 
 
 <a name="AppendError"></a>
-## func [AppendError](<https://github.com/barbell-math/smoothbrain-errs/blob/main/Errs.go#L95>)
+## func [AppendError](<https://github.com/barbell-math/smoothbrain-errs/blob/main/errs.go#L95>)
 
 ```go
 func AppendError(errs ...error) error
@@ -44,7 +44,7 @@ This allows for consistent error formatting. Special cases are as follows:
 - Multiple errors are not nil: The returned error will be a \[MultipleErrorsOccurred\] error with all of the sub\-errors wrapped in it following the above format.
 
 <a name="InverseWrap"></a>
-## func [InverseWrap](<https://github.com/barbell-math/smoothbrain-errs/blob/main/Errs.go#L36>)
+## func [InverseWrap](<https://github.com/barbell-math/smoothbrain-errs/blob/main/errs.go#L36>)
 
 ```go
 func InverseWrap(origErr error, fmtStr string, vals ...any) error
@@ -54,13 +54,13 @@ Wraps an error with a predetermined format, as shown below.
 
 ```
 <wrapped information>
-  |- <original error>
+  → <original error>
 ```
 
 This allows for consistent error formatting.
 
 <a name="Unwrap"></a>
-## func [Unwrap](<https://github.com/barbell-math/smoothbrain-errs/blob/main/Errs.go#L78>)
+## func [Unwrap](<https://github.com/barbell-math/smoothbrain-errs/blob/main/errs.go#L78>)
 
 ```go
 func Unwrap(err error) error
@@ -69,7 +69,7 @@ func Unwrap(err error) error
 Unwraps an error. A simple helper function to provide a clean error interface in this module.
 
 <a name="Wrap"></a>
-## func [Wrap](<https://github.com/barbell-math/smoothbrain-errs/blob/main/Errs.go#L24>)
+## func [Wrap](<https://github.com/barbell-math/smoothbrain-errs/blob/main/errs.go#L24>)
 
 ```go
 func Wrap(origErr error, fmtStr string, vals ...any) error
@@ -79,13 +79,13 @@ Wraps an error with a predetermined format, as shown below.
 
 ```
 <original error>
-  |- <wrapped information>
+  → <wrapped information>
 ```
 
 This allows for consistent error formatting.
 
 <a name="WrapValueList"></a>
-## func [WrapValueList](<https://github.com/barbell-math/smoothbrain-errs/blob/main/Errs.go#L49-L53>)
+## func [WrapValueList](<https://github.com/barbell-math/smoothbrain-errs/blob/main/errs.go#L49-L53>)
 
 ```go
 func WrapValueList(origErr error, description string, valsList ...WrapListVal) error
@@ -95,15 +95,15 @@ Wraps an error with a predetermined format, as shown below,
 
 ```
 <original error>
-  |- <description>
-  |- value1 name (value1 type): value1
-  |- value2 name (value2 type): value2
+  → <description>
+  → value1 name (value1 type) = value1
+  → value2 name (value2 type) = value2
 ```
 
 This allows for consistent error formatting.
 
 <a name="WrapListVal"></a>
-## type [WrapListVal](<https://github.com/barbell-math/smoothbrain-errs/blob/main/Errs.go#L12-L15>)
+## type [WrapListVal](<https://github.com/barbell-math/smoothbrain-errs/blob/main/errs.go#L12-L15>)
 
 
 

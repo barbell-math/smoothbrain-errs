@@ -14,14 +14,14 @@ var testErrTwo = errors.New("err2")
 func TestInverseWrap(t *testing.T) {
 	e := InverseWrap(testErrOne, "%d", 100)
 	sbtest.Eq(t,
-		fmt.Sprintf("100\n  |- %s", testErrOne.Error()), e.Error(),
+		fmt.Sprintf("100\n\t→ %s", testErrOne.Error()), e.Error(),
 	)
 }
 
 func TestWrap(t *testing.T) {
 	e := Wrap(testErrOne, "%d", 100)
 	sbtest.Eq(t,
-		fmt.Sprintf("%s\n  |- 100", testErrOne.Error()), e.Error(),
+		fmt.Sprintf("%s\n\t→ 100", testErrOne.Error()), e.Error(),
 	)
 }
 
@@ -34,7 +34,7 @@ func TestWrapValueList(t *testing.T) {
 	sbtest.Eq(
 		t,
 		fmt.Sprintf(
-			"%s\n  |- Description: Val outside range\n  |- value (int): 10",
+			"%s\n\t→ Description: Val outside range\n\t→ value (int) = 10",
 			testErrOne.Error(),
 		),
 		e.Error(),
