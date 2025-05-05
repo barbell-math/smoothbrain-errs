@@ -31,10 +31,10 @@ Given a list of errors it will append them with a predetermined format, as shown
 
 ```
 <original first error>
-  |- <wrapped information>
+  → <wrapped information>
 ...
 <original nth error>
-  |- <wrapped information>
+  → <wrapped information>
 ```
 
 This allows for consistent error formatting. Special cases are as follows:
